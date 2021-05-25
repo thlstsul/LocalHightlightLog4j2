@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="off" monitorInterval="1800">
+
+    <properties>
+        <property name="LOG_HOME">E:\logs</property>
+        <property name="ERROR_LOG_FILE_NAME">debug</property>
+    </properties>
+
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{blue} %highlight{%-5level} %style{%pid}{magenta} --- [%style{%t}{cyan}]%n %l%n : %style{%msg%n%throwable}{bright,white}" />
+        </Console>
+
+        <RollingRandomAccessFile name="File"
+                                 fileName="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}  %-5level %pid --- [%t] %l : %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <root level="debug" includeLocation="true">
+            <appender-ref ref="Console"/>
+        </root>
+    </Loggers>
+</Configuration>
